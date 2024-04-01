@@ -5,8 +5,8 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate')
 const CathchAsync = require('./utils/CatchAsync');
 const AppError = require('./utils/AppError');
+const {campSchema} = require('./validateForms');
 const Joi = require('joi');
-
 const mongoose = require('mongoose')
 const Campground = require('./model/campground')
 const CatchAsync = require('./utils/CatchAsync');
