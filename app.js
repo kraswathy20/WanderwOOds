@@ -5,11 +5,13 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate')
 const CathchAsync = require('./utils/CatchAsync');
 const AppError = require('./utils/AppError');
-const {campSchema} = require('./validateForms');
+const {campSchema,reviewSchema} = require('./validateForms');
 const Joi = require('joi');
 const mongoose = require('mongoose')
 const Campground = require('./model/campground')
 const CatchAsync = require('./utils/CatchAsync');
+const Review = require('./model/review');
+
 
 mongoose.connect('mongodb://127.0.0.1:27017/wanderWoods')
 .then(()=>{
@@ -26,15 +28,6 @@ app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'));
 
 const validateForm = (req,res,next)=>{
-    const campSchema = Joi.object({
-        campground:Joi.object({
-            title: Joi.string().required(),
-            price:Joi.number().required().min(0),
-            image:Joi.string().required(),
-            description:Joi.string().required(),
-            location:Joi.string().required(),
-        }).required()
-    })
     const {error} = campSchema.validate(req.body)
     console.log(error);
     if(error){
@@ -44,7 +37,19 @@ const validateForm = (req,res,next)=>{
     else{
         next();
     }
-}
+    }
+    
+    const validateReview = (req,res,next)=>{
+        const {error} = reviewSchema.validate(req.body)
+    console.log(error);
+    if(error){
+        const msg = error.details.map(el => el.message).join(',')
+        throw new AppError(msg,404)
+    }
+    else{
+        next();
+    }
+    }
 app.get('/campground', CathchAsync(async(req,res,next)=>{
     const camps = await  Campground.find()
     res.render('campgrounds/homepage',{camps})
@@ -75,13 +80,28 @@ app.put('/campground/:id',validateForm, CathchAsync(async(req,res,next)=>{
 
 app.get('/campground/:id',CatchAsync(async(req,res,next)=>{
     const {id} = req.params;
-    const camp = await Campground.findById(id)
+    const camp = await Campground.findById(id).populate('reviews');   
     res.render('campgrounds/details',{camp})
 }))
 app.delete('/campground/:id',CatchAsync(async (req,res,next)=>{
     const {id} = req.params
     await Campground.findByIdAndDelete(id)
     res.redirect('/campground')
+}))
+
+app.post('/campground/:id/reviews',validateReview, CatchAsync(async(req,res)=>{
+    const campground = await Campground.findById(req.params.id)
+    const review = new Review(req.body.reviews);
+    campground.reviews.push(review);
+    await review.save();
+    await campground.save();
+    res.redirect(`/campground/${campground._id}`);
+}))
+app.delete('/campground/:id/reviews/:reviewId',CatchAsync(async(req,res)=>{
+    const {id,reviewId} = req.params;
+    await Review.findByIdAndDelete(reviewId);
+    await Campground.findByIdAndUpdate(id,{$pull:{reviews:reviewId}});
+    res.redirect(`/campground/${id}`)
 }))
 
 app.all('*',(req,res,next)=>{
@@ -96,6 +116,6 @@ app.use((err,req,res,next)=>{
    
 })
 
-app.listen(8000,()=>{
+app.listen(3000,()=>{
     console.log("Serving at port 3000");
 })
