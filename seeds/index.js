@@ -21,6 +21,7 @@ const camp = async()=>{
             title:`${sample(descriptors)} ${sample(places)}`,
             image: 'https://source.unsplash.com/collection/483251',
             price,
+            author:'664daef8695460426a862798',
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos suscipit tenetur, error harum inventore dolorum rerum. Ea debitis voluptas cupiditate ut, iusto accusamus aperiam alias harum atque dolores tempora corporis.'
         });
         await campground.save()
