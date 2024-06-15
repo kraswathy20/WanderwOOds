@@ -12,8 +12,10 @@ module.exports.addCamps = async(req,res,next)=>{
 module.exports.createNewCamp = async(req,res,next)=>{
     // if(!req.body.campground) throw new AppError('Invalid Campground Data',400)
    const Camp =  new Campground(req.body.campground)
+   Camp.images = req.files.map(f =>({url:f.path,filename:f.filename}))
    Camp.author = req.user._id;
    await Camp.save();
+   console.log(Camp);
    req.flash('success','Successfully created a new Campground')
    res.redirect(`/campground/${Camp._id}`)
 }
@@ -49,7 +51,6 @@ module.exports.viewCamp = async(req,res,next)=>{
         path:'author'
     })
 }).populate('author')  
-console.log(camp);
     if(!camp){
         req.flash('error','Cannot Find that campground')
         return res.redirect('/campground')

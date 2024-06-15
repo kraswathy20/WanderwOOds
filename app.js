@@ -1,3 +1,10 @@
+if(process.env.NODE_ENV !== "production"){
+    require('dotenv').config()
+}
+
+console.log(process.env.CLOUDINARY_SECRET);
+console.log(process.env.CLOUDINARY_CLOUD_NAME);
+
 const express = require('express')
 const app = express()
 const path = require('path')
@@ -10,6 +17,8 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./model/user')
 const AppError = require('./utils/AppError')
+
+
 
 
 const campgroundRoutes = require('./routes/campground')
