@@ -19,8 +19,24 @@ const camp = async()=>{
         const campground = new Campground({
             location: `${cities[randCityIndex].city}, ${cities[randCityIndex].state}`,
             title:`${sample(descriptors)} ${sample(places)}`,
-            image: 'https://source.unsplash.com/collection/483251',
             price,
+            images: [
+                {
+                  url: 'https://res.cloudinary.com/dyebwfniv/image/upload/v1718739341/WanderWoodsCamp/mg5c7disxqu3kcsjgu3v.jpg',
+                  filename: 'WanderWoodsCamp/mg5c7disxqu3kcsjgu3v',
+                  
+                },
+                {
+                  url: 'https://res.cloudinary.com/dyebwfniv/image/upload/v1718739343/WanderWoodsCamp/ttq26lr7mnncvbklkxcp.jpg',
+                  filename: 'WanderWoodsCamp/ttq26lr7mnncvbklkxcp',
+                  
+                },
+                {
+                  url: 'https://res.cloudinary.com/dyebwfniv/image/upload/v1718739345/WanderWoodsCamp/bzs9g3eohjbymroxjzux.jpg',
+                  filename: 'WanderWoodsCamp/bzs9g3eohjbymroxjzux',
+                
+                }
+              ],
             author:'664daef8695460426a862798',
             description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos suscipit tenetur, error harum inventore dolorum rerum. Ea debitis voluptas cupiditate ut, iusto accusamus aperiam alias harum atque dolores tempora corporis.'
         });
