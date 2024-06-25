@@ -3,8 +3,6 @@ const Schema = mongoose.Schema;
 const Review = require('./review')
 
 
-https://res.cloudinary.com/dyebwfniv/image/upload/w_300/WanderWoodsCamp/pf3yuue3ummareeonouy.JPG
-
 
 imageSchema = new Schema({
     url:String,

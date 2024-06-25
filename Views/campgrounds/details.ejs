@@ -1,9 +1,7 @@
 <% layout('./layouts/boilerplate') -%>
 <link rel="stylesheet" href="/stylesheets/stars.css">
 
-  <script>
-    const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
-  </script>
+
 <body>
   <div class="row mb-3">
     <div class="col-6">
@@ -110,5 +108,7 @@
     </div>
   </div>
 </body>
-
+<script>
+  const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+</script>
 <script src="/javascript/showPageMap.js"></script>

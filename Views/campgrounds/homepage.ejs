@@ -8,7 +8,10 @@
             <div class="card">
                 <div class="row">
                     <div class="col-md-4">
+                        <% if (camp.images && camp.images.length > 0) { %>
                         <img src="<%= camp.images[0].url %>" alt="" srcset="" class="img-fluid">
+                        <% } %>
+                            
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">
