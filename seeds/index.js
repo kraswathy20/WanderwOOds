@@ -20,6 +20,10 @@ const camp = async()=>{
             location: `${cities[randCityIndex].city}, ${cities[randCityIndex].state}`,
             title:`${sample(descriptors)} ${sample(places)}`,
             price,
+            geometry: {
+              type: 'Point',
+              coordinates: [ 76.24544341117145, 9.967427712744971 ]
+            },
             images: [
                 {
                   url: 'https://res.cloudinary.com/dyebwfniv/image/upload/v1718739341/WanderWoodsCamp/mg5c7disxqu3kcsjgu3v.jpg',

@@ -110,5 +110,6 @@
 </body>
 <script>
   const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
+  const camp = JSON.parse('<%- JSON.stringify(camp) %>');
 </script>
 <script src="/javascript/showPageMap.js"></script>

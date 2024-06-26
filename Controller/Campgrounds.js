@@ -46,7 +46,7 @@ module.exports.updateCamp = async(req,res,next)=>{
     // console.log(req.body);
     const camp = await Campground.findByIdAndUpdate(id,{...req.body.campground},{runValidators:true,new:true});
     const geoData = await maptilerClient.geocoding.forward(req.body.campground.location, { limit: 1 });
-    campground.geometry = geoData.features[0].geometry;
+    camp.geometry = geoData.features[0].geometry;
     const img =  (req.files.map(f=>({url:f.path,filename:f.filename})))
     camp.images.push(...img)
     await camp.save();
@@ -76,7 +76,7 @@ module.exports.viewCamp = async(req,res,next)=>{
     } else{
         res.render('campgrounds/details',{camp})
     }
-    
+    console.log(camp);
 }
 
 module.exports.deleteCamp = async (req,res,next)=>{
