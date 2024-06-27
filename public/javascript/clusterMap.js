@@ -11,7 +11,7 @@ map.on('load', function () {
     // add a clustered GeoJSON source for a sample set of earthquakes
     map.addSource('earthquakes', {
       'type': 'geojson',
-      'data': 'https://docs.maptiler.com/sdk-js/assets/earthquakes.geojson',
+      'data': camps,
       cluster: true,
       clusterMaxZoom: 14, // Max zoom to cluster points on
       clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
@@ -130,3 +130,13 @@ map.on('load', function () {
       map.getCanvas().style.cursor = '';
     });
   });
+
+
+
+
+
+
+//   { "type": "Feature",
+//         "properties": { "id": "ak16994521", "mag": 2.3, "time": 1507425650893, "felt": null, "tsunami": 0 }, 
+//         "geometry": { "type": "Point","coordinates": [ -151.5129, 63.1016, 0.0 ] } 
+//     }

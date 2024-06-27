@@ -22,7 +22,11 @@ const camp = async()=>{
             price,
             geometry: {
               type: 'Point',
-              coordinates: [ 76.24544341117145, 9.967427712744971 ]
+              coordinates: [ 
+                cities[randCityIndex].longitude, 
+                cities[randCityIndex].latitude
+                ],
+               
             },
             images: [
                 {
