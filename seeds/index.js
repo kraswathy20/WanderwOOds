@@ -13,7 +13,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/wanderWoods')
 const sample = arr => arr[Math.floor(Math.random() * arr.length)];
 const camp = async()=>{
    await Campground.deleteMany({});
-    for(i=0;i<50;i++){
+    for(i=0;i<300;i++){
         const randCityIndex = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 1000)
         const campground = new Campground({

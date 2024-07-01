@@ -30,5 +30,6 @@
 <script>
     const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
     const camps = { features: <%- JSON.stringify(camps) %>}
+    console.log(camps);
   </script>
 <script src="/javascript/clusterMap.js"></script>

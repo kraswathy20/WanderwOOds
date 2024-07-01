@@ -76,7 +76,7 @@ module.exports.viewCamp = async(req,res,next)=>{
     } else{
         res.render('campgrounds/details',{camp})
     }
-    console.log(camp);
+    // console.log(camp);
 }
 
 module.exports.deleteCamp = async (req,res,next)=>{

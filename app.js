@@ -74,6 +74,11 @@ app.get('/newuser',async(req,res)=>{
     const newbie = await User.register(user,'nugget');
     res.send(newbie)
 })
+
+app.get('/',(req,res)=>{
+    res.render('home')
+})
+
 app.use('/', userRoutes)
 app.use('/campground',campgroundRoutes);
 app.use('/campground/:id/reviews',reviewRoutes)
