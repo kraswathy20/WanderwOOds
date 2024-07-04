@@ -60,28 +60,28 @@
     <link rel="stylesheet" href="/stylesheets/home.css">
 </head>
 <body>
-    <header>
+    <header class="mt-5">
     <nav class="navbar navbar-expand">
       <div class="container-fluid cover-container">
           <h3 class="navbar-brand text-white">WanderwOOds</h3>
           <div class="navbar-nav" >
-              <a class="nav-link text-white" href="#">About</a>
-              <a class="nav-link text-white" href="/campground">Campgrounds</a>
+              <a class="nav-item nav-link " href="#">About</a>
+              <a class="nav-item nav-link " href="/campground">Campgrounds</a>
               <% if(!currentuser) {%>
-              <a class="nav-item nav-link text-white" href="/register">Register</a>
-              <a class="nav-item nav-link text-white" href="/login">Login</a>
+              <a class="nav-item nav-link " href="/register">Register</a>
+              <a class="nav-item nav-link " href="/login">Login</a>
               <% } else{%>
-              <a class="nav-item nav-link text-white" href="/logout">Logout</a>
+              <a class="nav-item nav-link " href="/logout">Logout</a>
               <% } %>
           </div>
       </div>
   </nav> 
 </header>
-    <main class="">
+    <main class="mt-5">
         <h4 class="mt-5">WanderwOOds</h4>
         <p>Welcome to Wanderwoods Camping!</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, necessitatibus iste. Sit dicta sunt, nam quis ducimus animi magni provident aliquid aperiam id dolorum aspernatur iure recusandae, est itaque a.</p>
-        <a href="#" class="btn btn-secondary">View Campground</a>
+        <a href="/campground" class="btn btn-secondary">View Campground</a>
     </main>
     <footer class="text-white-50 mt-auto">
         <p>&copy; 2024 WanderwOOds</p>
