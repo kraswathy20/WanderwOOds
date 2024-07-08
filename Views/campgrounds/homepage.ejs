@@ -1,12 +1,12 @@
 <% layout('layouts/boilerplate') -%>
 
 <body>
-    <div id="map" style="width: 100%; height: 270px;"></div>
+    <div id="cluster-map" style="width: 100%; height: 270px;"></div>
     <h1 class="text-center">All Campgrounds</h1>
     <!-- <button><a href="/campground/new" style="text-decoration: none;">New Campground</a></button> -->
     
         <% for(let camp of camps) {%>
-            <div class="card">
+            <div class="card mb-3">
                 <div class="row">
                     <div class="col-md-4">
                         <% if (camp.images && camp.images.length > 0) { %>
@@ -30,6 +30,6 @@
 <script>
     const maptilerApiKey = '<%- process.env.MAPTILER_API_KEY %>';
     const camps = { features: <%- JSON.stringify(camps) %>}
-    console.log(camps);
+    
   </script>
 <script src="/javascript/clusterMap.js"></script>

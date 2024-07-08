@@ -1,12 +1,12 @@
 maptilersdk.config.apiKey = maptilerApiKey;
 
 const map = new maptilersdk.Map({
-    container: 'map',
+    container: 'cluster-map',
     style: maptilersdk.MapStyle.BRIGHT,
     center: [-103.59179687498357, 40.66995747013945],
     zoom: 3
 });
-console.log(camps);
+
 map.on('load', function () {
     // add a clustered GeoJSON source for a sample set of earthquakes
     map.addSource('campgrounds', {

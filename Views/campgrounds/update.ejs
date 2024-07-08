@@ -3,59 +3,65 @@
 <body>
     
     <div class="row">
-        <div class="col-6 offset-3">
+        <div class="col-lg-8 offset-lg-2 col-xl-6 offset-xl-3">
             <h2 class="text-center">Edit Campground </h2>
             <form class="validate-form" action="/campground/<%= camp._id %>?_method=PUT" method="POST" novalidate enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="title" class="form-label">Title:</label>
                     <input type="text" class="form-control" name="campground[title]" value="<%= camp.title %>" id="title" placeholder="Enter Campground" required>
-                 <div class="valid-feedback">
+                    <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
-                <div class="mb-3">
+                  <div class="mb-3">
                     <label for="formFileMultiple" class="form-label">Upload Images:</label>
                     <input class="form-control" name="image" type="file" id="formFileMultiple" multiple>
                   </div>
                 <div class="mb-3">
                     <label for="location" class="form-label">Location:</label>
                     <input type="text" class="form-control" name="campground[location]" value="<%= camp.location %>" id="location" placeholder="Enter Location" required>
-                 <div class="valid-feedback">
+                    <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Description:</label>
                     <textarea class="form-control" placeholder="Leave a comment here" id="description" name="campground[description]" required><%= camp.description  %></textarea>
-                 <div class="valid-feedback">
+                    <div class="valid-feedback">
                         Looks good!
                     </div>
                 </div>
-                <div class="input-group mb-3">
+                  <div class="input-group mb-3">
                     <span class="input-group-text" id="price">$</span>
                     <input type="text" class="form-control" placeholder="0.0" name="campground[price]" value="<%= camp.price %>" aria-label="Username" aria-describedby="price" required>
                   </div>
-                 <div class="valid-feedback">
+                  <div class="valid-feedback">
                         Looks good!
-                    </div>
-                    <div class="mb-3">
-                      <% camp.images.forEach((img,i)=>{ %>
-                        <img src="<%= img.thumbnail %>" alt="" class="img-thumbnail" >
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="<%= i %>" name="deleteImages[]" value="<%= img.filename %>">
-                          <label class="form-check-label" for="<%= i %>">Delete?</label>
+                  </div>
+                        <div class="mb-3 text-center">
+                          <div class="row " >
+                            <% camp.images.forEach((img,i)=>{ %>
+                              <div class="col-xl-4 offset-xl-1 ">
+                                  <img src="<%= img.thumbnail %>" alt="" class="img-thumbnail " >
+                                  <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="<%= i %>" name="deleteImages[]" value="<%= img.filename %>">
+                                    <label class="form-check-label" for="<%= i %>">Delete?</label>
+                                  </div>
+                              </div>
+                            <% }) %>
+                          </div>
                         </div>
-                        <% }) %>
-                    </div>
-                  <div class="mb-3">
+                    
+                  <div class="mb-3 text-center">
                     <button class="btn btn-success">Update Campground</button>  
-                    <button class="btn btn-warning"><a href="/campground" style="text-decoration: none;">Back to Campgrounds</a></button>
+                    <button class="btn btn-dark"><a href="/campground" style="text-decoration: none; color: white;">Back to Campgrounds</a></button>
                 </div>
-                
+              </div>
             </form>
             <br>
         </div>
     </div>
+  </div>
 </body>
 <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields

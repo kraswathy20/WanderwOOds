@@ -2,8 +2,8 @@ if(process.env.NODE_ENV !== "production"){
     require('dotenv').config()
 }
 
-console.log(process.env.CLOUDINARY_SECRET);
-console.log(process.env.CLOUDINARY_CLOUD_NAME);
+// console.log(process.env.CLOUDINARY_SECRET);
+// console.log(process.env.CLOUDINARY_CLOUD_NAME);
 
 const express = require('express')
 const app = express()
@@ -17,7 +17,7 @@ const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const User = require('./model/user')
 const AppError = require('./utils/AppError')
-
+const mongoSanitize = require('express-mongo-sanitize');
 
 
 
@@ -38,7 +38,11 @@ app.set('view engine','ejs')
 app.set('Views',path.join(__dirname,'/view'))
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'));
+app.use(mongoSanitize({
+    replaceWith: '_',
+  }));
 
+  
 const configSession = {
     secret:'thisshouldbeabigsecret',
     resave:false,
@@ -61,6 +65,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use((req,res,next)=>{
+    console.log(req.query);
     res.locals.currentuser = req.user;
     res.locals.success = req.flash('success')
     res.locals.error = req.flash('error')
