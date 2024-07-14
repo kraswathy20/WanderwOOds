@@ -19,18 +19,24 @@ const User = require('./model/user')
 const AppError = require('./utils/AppError')
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
-
-
+const dbUrl = 'mongodb://127.0.0.1:27017/wanderWoods'
+// console.log(dbUrl);
 const campgroundRoutes = require('./routes/campground')
 const reviewRoutes = require('./routes/review')
 const userRoutes = require('./routes/user')
+const MongoDBStore = require("connect-mongo")(session)
 
-mongoose.connect('mongodb://127.0.0.1:27017/wanderWoods')
+
+
+
+
+// 'mongodb://127.170.0.1:270/wanderWoods'
+mongoose.connect(dbUrl)
 .then(()=>{
     console.log('Mongoose connection established');
 })
 .catch((err)=>{
-    console.log('Oops!! Connetion Error when connecting with Mongoose!! Try Again :(');
+    console.log('Oops!! Connetion Error when connecting with Mongoose!! Try Again :(', err);
 })
 
 app.engine('ejs', ejsMate)
@@ -42,8 +48,17 @@ app.use(mongoSanitize({
     replaceWith: '_',
   }));
 
-  
+  const store = new MongoDBStore({
+    url:dbUrl,
+    secret:'thisshouldbeabettersecret',
+    touchAfter: 24 * 60 * 60,
+  })
+
+  store.on('error',function(e){
+    console.log('SESSION STORE ERROR',e);
+  })
 const configSession = {
+    store,
     name: 'session',
     secret:'thisshouldbeabigsecret',
     resave:false,
@@ -57,7 +72,51 @@ const configSession = {
 }
 app.use(session(configSession))
 app.use(flash())
-app.use(helmet({contentSecurityPolicy:false}))
+app.use(helmet())
+
+const scriptSrcUrls = [
+    "https://stackpath.bootstrapcdn.com/",
+    "https://kit.fontawesome.com/",
+    "https://cdnjs.cloudflare.com/",
+    "https://cdn.jsdelivr.net",
+    "https://cdn.maptiler.com/",
+];
+const styleSrcUrls = [
+    "https://kit-free.fontawesome.com/",
+    "https://stackpath.bootstrapcdn.com/",
+    "https://fonts.googleapis.com/",
+    "https://use.fontawesome.com/",
+    "https://cdn.jsdelivr.net",
+    "https://cdn.maptiler.com/", 
+];
+const connectSrcUrls = [
+   
+    "https://api.maptiler.com/", 
+];
+
+const fontSrcUrls = [];
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                "https://api.maptiler.com/",
+                "https://res.cloudinary.com/dyebwfniv/", 
+                "https://images.unsplash.com/",
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
+
 
 app.use(passport.initialize())
 app.use(passport.session())
