@@ -19,7 +19,7 @@ const User = require('./model/user')
 const AppError = require('./utils/AppError')
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
-const dbUrl = 'mongodb://127.0.0.1:27017/wanderWoods'
+const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/wanderWoods'
 // console.log(dbUrl);
 const campgroundRoutes = require('./routes/campground')
 const reviewRoutes = require('./routes/review')
@@ -48,9 +48,10 @@ app.use(mongoSanitize({
     replaceWith: '_',
   }));
 
+  const secret = process.env.SECRET  || 'thisshouldbeabettersecret';
   const store = new MongoDBStore({
     url:dbUrl,
-    secret:'thisshouldbeabettersecret',
+    secret,
     touchAfter: 24 * 60 * 60,
   })
 
@@ -60,7 +61,7 @@ app.use(mongoSanitize({
 const configSession = {
     store,
     name: 'session',
-    secret:'thisshouldbeabigsecret',
+    secret,
     resave:false,
     saveUninitialized:true,
     cookie:{
