@@ -19,7 +19,7 @@ const User = require('./model/user')
 const AppError = require('./utils/AppError')
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
-const dbUrl = process.env.DB_URL || 'mongodb://127.0.0.1:27017/wanderWoods'
+// const dbUrl = process.env.DB_URL ||' 'mongodb://127.0.0.1:27017/wanderWoods'
 // console.log(dbUrl);
 const campgroundRoutes = require('./routes/campground')
 const reviewRoutes = require('./routes/review')
@@ -29,8 +29,8 @@ const MongoDBStore = require("connect-mongo")(session)
 
 
 
-
-// 'mongodb://127.170.0.1:270/wanderWoods'
+const dbUrl =process.env.DB_URL
+// 'mongodb://127.0.0.1:27017/wanderWoods'
 mongoose.connect(dbUrl)
 .then(()=>{
     console.log('Mongoose connection established');
@@ -48,25 +48,26 @@ app.use(mongoSanitize({
     replaceWith: '_',
   }));
 
-  const secret = process.env.SECRET  || 'thisshouldbeabettersecret';
+//   const secret = process.env.SECRET  || 'thisshouldbeabettersecret';
   const store = new MongoDBStore({
     url:dbUrl,
-    secret,
+    secret:'thisshouldbeabettersecret',
     touchAfter: 24 * 60 * 60,
   })
 
-  store.on('error',function(e){
-    console.log('SESSION STORE ERROR',e);
+  store.on("error",function(e){
+    console.log('SESSION STORE ERROR',e)
   })
+
 const configSession = {
     store,
     name: 'session',
-    secret,
+    secret: 'thisshouldbeabettersecret',
     resave:false,
     saveUninitialized:true,
     cookie:{
         httpOnly:true,
-        // secure:true,
+        secure:true,
         expires:Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge:1000 * 60 * 60 * 24 * 7
     }
