@@ -41,7 +41,7 @@ mongoose.connect(dbUrl)
 
 app.engine('ejs', ejsMate)
 app.set('view engine','ejs')
-app.set('Views',path.join(__dirname,'/view'))
+app.set('views',path.join(__dirname,'/Views'))
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'));
 app.use(mongoSanitize({
